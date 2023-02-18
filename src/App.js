@@ -13,10 +13,12 @@ import { AuthProvider } from './AuthContext/AuthProvider';
 import Forgetpassword from './AuthContext/Forget';
 import About from './Components/About';
 import ProtectRoute from './AuthContext/ProtectRoute';
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 
 function App() {
   return (
     <BrowserRouter>
+    
     <AuthProvider>
     <Routes>
 
@@ -32,6 +34,7 @@ function App() {
 
     </Routes>
     </AuthProvider>
+   
     </BrowserRouter>
   );
 }

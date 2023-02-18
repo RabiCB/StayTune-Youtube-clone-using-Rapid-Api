@@ -5,9 +5,11 @@ import { useEffect, useState } from "react";
 import Sidebar from "./Sidebar.js";
 import { BsSearch } from "react-icons/bs";
 import { Avatar } from "@mui/material";
+import { UserAuth } from "../AuthContext/AuthProvider.js";
 
 const Search = () => {
   const { search } = useParams();
+  const {loggedcurrentUser}=UserAuth(); 
   const [searchString, setSearchstring] = useState("");
   const [searchedVideos, setSearchedVideos] = useState([]);
   const options = {
@@ -69,7 +71,7 @@ const Search = () => {
             StayTune
           </h2>
         </div>
-        <Avatar />
+        <Avatar  src={`${loggedcurrentUser.photoURL===null?"https://img.freepik.com/free-vector/cute-astronaut-dance-cartoon-vector-icon-illustration-technology-science-icon-concept-isolated-premium-vector-flat-cartoon-style_138676-3851.jpg?w=2000":loggedcurrentUser.photoURL}`} />
       </div>
       <h4 className="pl-10 mt-2 text-bg-grey-400">results for {search|| searchedVideos}...</h4>
       <div className="flex   gap-4 flex-col pl-10 pr-10 pt-4 ">

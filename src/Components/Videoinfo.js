@@ -5,6 +5,7 @@ import Navbar from "./Navbar";
 import { BiLike } from "react-icons/bi";
 import "../App.css";
 import { Avatar } from "@mui/material";
+import Skeleton from '@mui/material/Skeleton';
 
 const Videoinfo = () => {
   const { id } = useParams();
@@ -65,10 +66,10 @@ const Videoinfo = () => {
                   alt="thubnails"
                 />
                 
-                <p className="max-sm:text-sm max-md:p-1">{i.snippet.title}</p>
+                <p className="max-sm:text-sm max-md:p-1">{i.snippet.title?i.snippet.title:<Skeleton/>}</p>
                 <div className="flex gap-4 items-center ">
                 <span className="font-bold bg-black text-white rounded-sm pl-2 pr-2 cursor-pointer">
-                  {i.snippet.channelTitle}
+                  {i.snippet.channelTitle  }
                 </span>
                 <span className="border-r-2 pr-2 border-slate-500">
                   {Math.round(i.statistics.likeCount)}

@@ -3,15 +3,18 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "./Sidebar.js";
 import { BsSearch } from "react-icons/bs";
+import "../App.css"
 import { Avatar } from "@mui/material";
 import {NavLink} from 'react-router-dom'
 import { UserAuth } from "../AuthContext/AuthProvider.js";
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 const Home = () => {
   const [videos, setVideos] = useState([]);
   const [search, setsearch] = useState("");
   const navigate=useNavigate();
-  const {logout,currentUser}=UserAuth();
+  const {logout,loggedcurrentUser}=UserAuth();
   const [profile,setProfile]=useState(false)
   const options = {
     method: 'GET',
@@ -25,6 +28,7 @@ const Home = () => {
     .then(response => response.json())
     .then(response => setVideos(response.items))
     .catch(err => console.error(err));
+    console.log(loggedcurrentUser)
 
   },[])
  const hanldeSubmit=(e)=>{
@@ -40,7 +44,7 @@ const Home = () => {
   
 
  }
-  
+
  
   return (
     <>
@@ -55,17 +59,18 @@ const Home = () => {
             type="text"
             value={search}
             onChange={(e) => setsearch(e.target.value)}
-            className=" pl-4 w-96 outline-none max-md:w-40 "
+            className=" home-input pl-4 w-96 outline-none max-md:w-40  "
             placeholder="search.."
           />
           <BsSearch onClick={hanldeSubmit} className="Search w-10  cursor-pointer" />
         </form>
         <div className="relative" onClick={()=>setProfile(!profile)}>
-        <Avatar className="cursor-pointer" />
+        <Avatar src={`${loggedcurrentUser.photoURL===null?"https://img.freepik.com/free-vector/cute-astronaut-dance-cartoon-vector-icon-illustration-technology-science-icon-concept-isolated-premium-vector-flat-cartoon-style_138676-3851.jpg?w=2000":loggedcurrentUser.photoURL}`} className="cursor-pointer" />
         {
-          profile?<div className="absolute  right-1 top-14 w-28  bg-slate-200 rounded-md flex justify-start  h-28">
+          profile?<div className="absolute  right-1 top-14 w-50  bg-slate-200 rounded-md flex justify-start  h-28">
             <ul className="flex flex-col gap-4 pl-2 pt-1">
-              <li>email</li>
+              <li className="text-sm">{loggedcurrentUser.email}</li>
+              <li className="text-sm">{loggedcurrentUser.displayName?loggedcurrentUser.displayName:'user07'}</li>
               <button className="bg-blue-600 text-white border-none w-16 h-8  rounded-md" onClick={handlelogout}>logout</button>
             </ul>
           </div>:null
@@ -84,11 +89,12 @@ const Home = () => {
                     className="rounded-lg"
                     src={v.snippet.thumbnails.high.url}
                     alt="thumbail"
+                    
                   />
                 </div>
                 <div className="flex items-center flex-col ">
                   <h2 className="font-bold">{v.snippet.channelTitle}</h2>
-                  <p>{v.snippet.title}</p>
+                  <p>{v.snippet.title }</p>
                   <h6>{v.viewCount}</h6>
                 </div>
               </div>
